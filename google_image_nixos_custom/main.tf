@@ -2,6 +2,11 @@ variable "bucket_name" {
   description = "Bucket where to store the image"
 }
 
+variable "NIX_PATH" {
+  description = "Allow to pass custom NIX_PATH. Ignored if `-`."
+  default     = "-"
+}
+
 variable "nixos_config" {
   description = "Path to a nixos configuration.nix file"
 }
@@ -25,7 +30,7 @@ variable "licenses" {
 # ----------------------------------------------------
 
 data "external" "nix_build" {
-  program = ["${path.module}/nixos-build.sh", var.nixos_config]
+  program = ["${path.module}/nixos-build.sh", var.NIX_PATH, var.nixos_config]
 }
 
 locals {
